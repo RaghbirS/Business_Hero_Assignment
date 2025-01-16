@@ -40,8 +40,8 @@ export default class TaskController {
     // Method to Add new Task
     static addNewTask = asyncHandler(async (req: Request, res: Response): Promise<void> => {
         const user = req.user;
-        const { title, description, status } = req.body;
-        if (!title || !description || !status) {
+        const { title, description="", status } = req.body;
+        if (!title || !status) {
             res.status(HttpStatusCodes.BAD_REQUEST).json({ message: 'Title, description and status fields are required' });
             return
         }

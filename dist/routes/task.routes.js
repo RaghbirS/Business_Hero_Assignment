@@ -25,7 +25,6 @@ const router = (0, express_1.Router)();
  *       required:
  *         - title
  *         - status
- *         - description
  */
 /**
  * @swagger

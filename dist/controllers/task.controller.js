@@ -42,8 +42,8 @@ TaskController.getTask = (0, asyncHandler_1.asyncHandler)((req, res) => __awaite
 // Method to Add new Task
 TaskController.addNewTask = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = req.user;
-    const { title, description, status } = req.body;
-    if (!title || !description || !status) {
+    const { title, description = "", status } = req.body;
+    if (!title || !status) {
         res.status(errorCodes_1.HttpStatusCodes.BAD_REQUEST).json({ message: 'Title, description and status fields are required' });
         return;
     }

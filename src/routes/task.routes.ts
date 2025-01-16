@@ -22,7 +22,6 @@ const router = Router();
  *       required:
  *         - title
  *         - status
- *         - description
  */
 
 /**

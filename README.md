@@ -250,3 +250,6 @@ The application uses custom error codes for better API response management. The 
 - `400 Bad Request`: Invalid request (e.g., missing data, invalid credentials).
 - `404 Not Found`: Resource not found (e.g., user or task does not exist).
 - `500 Internal Server Error`: Server-related errors.
+
+## Postman Collection
+

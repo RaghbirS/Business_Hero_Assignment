@@ -25,6 +25,10 @@ export default class TaskController {
 
     // Method to get a Task
     static getTask = asyncHandler(async (req: Request, res: Response): Promise<void> => {
+        if(!req.params.id){
+            res.status(HttpStatusCodes.BAD_REQUEST).json({ message: 'Task id is required' });
+            return
+        }
         const tasks = await Task.findOne({ ...req.query, _id: req.params.id, createdBy: req.user._id }).lean();
         if (!tasks) {
             res.status(HttpStatusCodes.NOT_FOUND).json({ message: 'Task not found' });
@@ -37,6 +41,10 @@ export default class TaskController {
     static addNewTask = asyncHandler(async (req: Request, res: Response): Promise<void> => {
         const user = req.user;
         const { title, description, status } = req.body;
+        if(!title ||  !description || !status){
+            res.status(HttpStatusCodes.BAD_REQUEST).json({ message: 'Title, description and status fields are required' });
+            return
+        }
         const newData = { title, description, status, createdBy: user._id };
         const newTask = await Task.create(newData);
         res.status(HttpStatusCodes.CREATED).json({ message: 'Task Created Successfully', data: newTask });
@@ -46,6 +54,10 @@ export default class TaskController {
 
     static updateTask = asyncHandler(async (req: Request, res: Response): Promise<void> => {
         const { id } = req.params;
+        if(!id){
+            res.status(HttpStatusCodes.BAD_REQUEST).json({ message: 'Task id is required' });
+            return
+        }
         const { title, description, status } = req.body;
 
         const task = await Task.findOne({ _id: id, createdBy: req.user._id });
@@ -66,6 +78,10 @@ export default class TaskController {
     // Method to delete a task
     static deleteTask = asyncHandler(async (req: Request, res: Response): Promise<void> => {
         const { id } = req.params;
+        if(!id){
+            res.status(HttpStatusCodes.BAD_REQUEST).json({ message: 'Task id is required' });
+            return
+        }
         const deletedTask = await Task.findOneAndDelete({ _id: id, createdBy: req.user._id }).lean();
 
         if (!deletedTask) {
@@ -78,8 +94,8 @@ export default class TaskController {
 
     // Method to delete multiple Tasks
     static bulkDelete = asyncHandler(async (req: Request, res: Response): Promise<void> => {
-        console.log(req.body)
         const { ids } = req.body; // Expecting an array of _ids in the body
+
         if (!Array.isArray(ids) || ids.length === 0) {
             throw new Error('Ids must be a non-empty array');
         }

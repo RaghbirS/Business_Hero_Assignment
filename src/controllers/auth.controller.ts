@@ -15,6 +15,11 @@ export default class AuthController {
     static registerUser = asyncHandler(async (req: Request, res: Response): Promise<void> => {
         const { email, userName, password } = req.body;
 
+        if(!email || !userName || !password) {
+            res.status(HttpStatusCodes.BAD_REQUEST).json({ message: 'Username, email and password fields are required' });
+            return
+        }
+
         const existingUser = await User.findOne({ email }).lean();
 
         if (existingUser) {
@@ -35,6 +40,11 @@ export default class AuthController {
     // Method to register a new user
     static loginUser = asyncHandler(async (req: Request, res: Response): Promise<void> => {
         const { email, password } = req.body;
+
+        if(!email || !password ) {
+            res.status(HttpStatusCodes.BAD_REQUEST).json({ message: 'Email and password fields are required' });
+            return
+        }
 
         // Check if the user exists
         const user = await User.findOne({ email }).lean();

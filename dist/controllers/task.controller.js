@@ -28,6 +28,10 @@ TaskController.getAllTasks = (0, asyncHandler_1.asyncHandler)((req, res) => __aw
 }));
 // Method to get a Task
 TaskController.getTask = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!req.params.id) {
+        res.status(errorCodes_1.HttpStatusCodes.BAD_REQUEST).json({ message: 'Task id is required' });
+        return;
+    }
     const tasks = yield task_model_1.default.findOne(Object.assign(Object.assign({}, req.query), { _id: req.params.id, createdBy: req.user._id })).lean();
     if (!tasks) {
         res.status(errorCodes_1.HttpStatusCodes.NOT_FOUND).json({ message: 'Task not found' });
@@ -39,6 +43,10 @@ TaskController.getTask = (0, asyncHandler_1.asyncHandler)((req, res) => __awaite
 TaskController.addNewTask = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = req.user;
     const { title, description, status } = req.body;
+    if (!title || !description || !status) {
+        res.status(errorCodes_1.HttpStatusCodes.BAD_REQUEST).json({ message: 'Title, description and status fields are required' });
+        return;
+    }
     const newData = { title, description, status, createdBy: user._id };
     const newTask = yield task_model_1.default.create(newData);
     res.status(errorCodes_1.HttpStatusCodes.CREATED).json({ message: 'Task Created Successfully', data: newTask });
@@ -46,6 +54,10 @@ TaskController.addNewTask = (0, asyncHandler_1.asyncHandler)((req, res) => __awa
 //Method to update Task
 TaskController.updateTask = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
+    if (!id) {
+        res.status(errorCodes_1.HttpStatusCodes.BAD_REQUEST).json({ message: 'Task id is required' });
+        return;
+    }
     const { title, description, status } = req.body;
     const task = yield task_model_1.default.findOne({ _id: id, createdBy: req.user._id });
     if (!task) {
@@ -61,6 +73,10 @@ TaskController.updateTask = (0, asyncHandler_1.asyncHandler)((req, res) => __awa
 // Method to delete a task
 TaskController.deleteTask = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
+    if (!id) {
+        res.status(errorCodes_1.HttpStatusCodes.BAD_REQUEST).json({ message: 'Task id is required' });
+        return;
+    }
     const deletedTask = yield task_model_1.default.findOneAndDelete({ _id: id, createdBy: req.user._id }).lean();
     if (!deletedTask) {
         res.status(errorCodes_1.HttpStatusCodes.NOT_FOUND).json({ message: 'Task not found' });
@@ -70,7 +86,6 @@ TaskController.deleteTask = (0, asyncHandler_1.asyncHandler)((req, res) => __awa
 }));
 // Method to delete multiple Tasks
 TaskController.bulkDelete = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body);
     const { ids } = req.body; // Expecting an array of _ids in the body
     if (!Array.isArray(ids) || ids.length === 0) {
         throw new Error('Ids must be a non-empty array');

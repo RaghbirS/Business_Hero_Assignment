@@ -27,6 +27,10 @@ _a = AuthController;
 // Method to register a new user
 AuthController.registerUser = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, userName, password } = req.body;
+    if (!email || !userName || !password) {
+        res.status(errorCodes_1.HttpStatusCodes.BAD_REQUEST).json({ message: 'Username, email and password fields are required' });
+        return;
+    }
     const existingUser = yield user_model_1.default.findOne({ email }).lean();
     if (existingUser) {
         res.status(errorCodes_1.HttpStatusCodes.BAD_REQUEST).json({ message: 'User already exists' });
@@ -42,6 +46,10 @@ AuthController.registerUser = (0, asyncHandler_1.asyncHandler)((req, res) => __a
 // Method to register a new user
 AuthController.loginUser = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
+    if (!email || !password) {
+        res.status(errorCodes_1.HttpStatusCodes.BAD_REQUEST).json({ message: 'Email and password fields are required' });
+        return;
+    }
     // Check if the user exists
     const user = yield user_model_1.default.findOne({ email }).lean();
     if (!user) {

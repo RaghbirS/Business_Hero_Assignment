@@ -51,6 +51,8 @@ This project implements a user authentication system, user management routes, an
    ```bash
    npm start
    ```
+6. Open the http://localhost or https://business-hero-assignment.onrender.com and access API Documention made with Swagger
+
 
 ## Deployed Link
 

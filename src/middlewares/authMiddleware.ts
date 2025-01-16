@@ -15,7 +15,6 @@ export const authenticateToken = async (
 ): Promise<void> => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
-
   if (!token) {
     res.status(401).json({ message: "Access token is missing or invalid" });
     return; // Ensure no further code execution

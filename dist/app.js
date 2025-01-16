@@ -8,6 +8,8 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const routes_1 = __importDefault(require("./routes"));
 const cors_1 = __importDefault(require("cors"));
 const errorHandler_1 = require("./utils/errorHandler");
+const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
+const swagger_config_1 = __importDefault(require("./swagger.config"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 // Middleware
@@ -18,4 +20,5 @@ app.use((0, cors_1.default)());
 app.use("/api", routes_1.default);
 // Error handling middleware
 app.use(errorHandler_1.errorHandler);
+app.use("/", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_config_1.default));
 exports.default = app;

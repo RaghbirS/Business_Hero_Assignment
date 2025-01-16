@@ -25,7 +25,7 @@ export default class TaskController {
 
     // Method to get a Task
     static getTask = asyncHandler(async (req: Request, res: Response): Promise<void> => {
-        if(!req.params.id){
+        if (!req.params.id) {
             res.status(HttpStatusCodes.BAD_REQUEST).json({ message: 'Task id is required' });
             return
         }
@@ -41,8 +41,12 @@ export default class TaskController {
     static addNewTask = asyncHandler(async (req: Request, res: Response): Promise<void> => {
         const user = req.user;
         const { title, description, status } = req.body;
-        if(!title ||  !description || !status){
+        if (!title || !description || !status) {
             res.status(HttpStatusCodes.BAD_REQUEST).json({ message: 'Title, description and status fields are required' });
+            return
+        }
+        if (!["pending", "inProgress", "completed"].includes(status)) {
+            res.status(HttpStatusCodes.BAD_REQUEST).json({ message: 'Invalid status' });
             return
         }
         const newData = { title, description, status, createdBy: user._id };
@@ -54,7 +58,7 @@ export default class TaskController {
 
     static updateTask = asyncHandler(async (req: Request, res: Response): Promise<void> => {
         const { id } = req.params;
-        if(!id){
+        if (!id) {
             res.status(HttpStatusCodes.BAD_REQUEST).json({ message: 'Task id is required' });
             return
         }
@@ -66,7 +70,10 @@ export default class TaskController {
             return;
         }
 
-
+        if (!["pending", "inProgress", "completed"].includes(status)) {
+            res.status(HttpStatusCodes.BAD_REQUEST).json({ message: 'Invalid status' });
+            return
+        }
         task.title = title ?? task.title;
         task.description = description ?? task.description;
         task.status = status ?? task.status;
@@ -78,7 +85,7 @@ export default class TaskController {
     // Method to delete a task
     static deleteTask = asyncHandler(async (req: Request, res: Response): Promise<void> => {
         const { id } = req.params;
-        if(!id){
+        if (!id) {
             res.status(HttpStatusCodes.BAD_REQUEST).json({ message: 'Task id is required' });
             return
         }

@@ -117,6 +117,17 @@ Deletes a user and all of their tasks.
 
 The task management system provides routes for performing CRUD operations on tasks.
 
+Task Schema
+
+```
+TaskInterface {
+  title: string;
+  description: string;
+  status: "pending" | "inProgress" | "completed";
+  createdBy: mongoose.Types.ObjectId;
+}
+```
+
 ### GET `/`
 
 Fetches all tasks for the authenticated user.
@@ -259,7 +270,6 @@ The application uses custom error codes for better API response management. The 
 - `404 Not Found`: Resource not found (e.g., user or task does not exist).
 - `500 Internal Server Error`: Server-related errors.
 
-
 ## Deployment Details on Render
 
 This application is deployed on Render. You can access the live application using the following link:
@@ -271,29 +281,32 @@ This application is deployed on Render. You can access the live application usin
 1. **Sign up/Log in to Render**: Visit [Render](https://render.com) and create an account if you haven't already. If you have an account, log in.
 
 2. **Create a New Web Service**:
+
    - After logging in, click on the **"New"** button and select **"Web Service"**.
    - Connect your GitHub repository to Render by selecting the GitHub option and following the prompts to authenticate with your GitHub account.
    - Once connected, select the repository where the project is stored.
 
 3. **Configure Deployment Settings**:
+
    - Select the branch you want to deploy (typically `main`).
    - Set the build and start commands:
      - **Build Command**: `npm install`
      - **Start Command**: `npm start`
 
 4. **Set Up Environment Variables**:
+
    - In the Render dashboard, go to the **Environment** tab of your web service.
    - Add the following environment variables:
      - `JWT_SECRET`: A secret key used for signing JWT tokens.
      - `MONGO_URI`: Your MongoDB connection string (without the database name, just the base URL).
 
 5. **Deploy**:
+
    - After configuring the settings, click on **"Create Web Service"** to deploy the application.
    - Render will build and deploy your application, and you can monitor the process from the dashboard.
    - Once the deployment is complete, your app will be accessible via the provided Render URL.
 
 6. **Access the Application**: After deployment, you can visit the application at the provided Render URL: [https://business-hero-assignment.onrender.com](https://business-hero-assignment.onrender.com).
-
 
 ## Postman Collection
 

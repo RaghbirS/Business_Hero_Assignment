@@ -253,3 +253,364 @@ The application uses custom error codes for better API response management. The 
 
 ## Postman Collection
 
+```
+{
+	"info": {
+		"_postman_id": "700d9da6-c270-4efd-819d-96d0609a6e89",
+		"name": "Task Management Assignment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31249115"
+	},
+	"item": [
+		{
+			"name": "Register User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"john@gmail.com\",\r\n    \"userName\": \"Jahn Doe\",\r\n    \"password\": \"password\"\r\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://business-hero-assignment.onrender.com/api/auth/register",
+					"protocol": "https",
+					"host": [
+						"business-hero-assignment",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"john@gmail.com\",\r\n    \"password\": \"password\"\r\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://business-hero-assignment.onrender.com/api/auth/login",
+					"protocol": "https",
+					"host": [
+						"business-hero-assignment",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Task for a User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Nzg5MDU4MDNjZjMyOTdiNzFkNTIyMWEiLCJpYXQiOjE3MzcwMzMyNjIsImV4cCI6MTczNzAzNjg2Mn0.lvhfo6eFmniPyDcUnFjyC4lSlQcDbCrhV1VDdKca09o",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\":\"Task 4\",\r\n    \"description\":\"This is my third task\",\r\n    \"status\":\"inProgress\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://business-hero-assignment.onrender.com/api/tasks",
+					"protocol": "https",
+					"host": [
+						"business-hero-assignment",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Tasks of a User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Nzg5MDU4MDNjZjMyOTdiNzFkNTIyMWEiLCJpYXQiOjE3MzcwMzMyNjIsImV4cCI6MTczNzAzNjg2Mn0.lvhfo6eFmniPyDcUnFjyC4lSlQcDbCrhV1VDdKca09o",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://business-hero-assignment.onrender.com/api/tasks",
+					"protocol": "https",
+					"host": [
+						"business-hero-assignment",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Task with ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Nzg5MDQyMDNjZjMyOTdiNzFkNTIyMTAiLCJpYXQiOjE3MzcwMzI3NDcsImV4cCI6MTczNzAzNjM0N30.U1kLdmUR8e8bVW6HfpLMCs1Hjm5PritO-laBlBbmakA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://business-hero-assignment.onrender.com/api/tasks/6788f8ef55dfc685df873328",
+					"protocol": "https",
+					"host": [
+						"business-hero-assignment",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"tasks",
+						"6788f8ef55dfc685df873328"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Task",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Nzg5MDQyMDNjZjMyOTdiNzFkNTIyMTAiLCJpYXQiOjE3MzcwMzI3NDcsImV4cCI6MTczNzAzNjM0N30.U1kLdmUR8e8bVW6HfpLMCs1Hjm5PritO-laBlBbmakA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\":\"Task 1\",\r\n    \"description\":\"This is my first task updated\",\r\n    \"status\":\"inProgress\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://business-hero-assignment.onrender.com/api/tasks/6788f07f38921e94ba17522c",
+					"protocol": "https",
+					"host": [
+						"business-hero-assignment",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"tasks",
+						"6788f07f38921e94ba17522c"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Task",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Nzg5MDQyMDNjZjMyOTdiNzFkNTIyMTAiLCJpYXQiOjE3MzcwMzI3NDcsImV4cCI6MTczNzAzNjM0N30.U1kLdmUR8e8bVW6HfpLMCs1Hjm5PritO-laBlBbmakA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://business-hero-assignment.onrender.com/api/tasks/6788f0bc38921e94ba17522f",
+					"protocol": "https",
+					"host": [
+						"business-hero-assignment",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"tasks",
+						"6788f0bc38921e94ba17522f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bulk Delete Tasks",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Nzg5MDQyMDNjZjMyOTdiNzFkNTIyMTAiLCJpYXQiOjE3MzcwMzI3NDcsImV4cCI6MTczNzAzNjM0N30.U1kLdmUR8e8bVW6HfpLMCs1Hjm5PritO-laBlBbmakA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ids\":[\"6788f07f38921e94ba17522c\",\"6788f371250f5b4c09ce7f1a\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://business-hero-assignment.onrender.com/api/tasks/bulkDelete",
+					"protocol": "https",
+					"host": [
+						"business-hero-assignment",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"tasks",
+						"bulkDelete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Data with JWT Token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Nzg5MDQyMDNjZjMyOTdiNzFkNTIyMTAiLCJpYXQiOjE3MzcwMzI3NDcsImV4cCI6MTczNzAzNjM0N30.U1kLdmUR8e8bVW6HfpLMCs1Hjm5PritO-laBlBbmakA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://business-hero-assignment.onrender.com/api/users/getUser",
+					"protocol": "https",
+					"host": [
+						"business-hero-assignment",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"users",
+						"getUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User and all its Tasks",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Nzg5MDQyMDNjZjMyOTdiNzFkNTIyMTAiLCJpYXQiOjE3MzcwMzI3NDcsImV4cCI6MTczNzAzNjM0N30.U1kLdmUR8e8bVW6HfpLMCs1Hjm5PritO-laBlBbmakA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://business-hero-assignment.onrender.com/api/users/6788eef9b859ace564537c1b",
+					"protocol": "https",
+					"host": [
+						"business-hero-assignment",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"users",
+						"6788eef9b859ace564537c1b"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
+```

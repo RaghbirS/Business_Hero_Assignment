@@ -55,7 +55,6 @@ export default class TaskController {
     })
 
     //Method to update Task
-
     static updateTask = asyncHandler(async (req: Request, res: Response): Promise<void> => {
         const { id } = req.params;
         if (!id) {

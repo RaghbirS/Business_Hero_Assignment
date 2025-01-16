@@ -14,6 +14,7 @@ declare module 'express-serve-static-core' {
 }
 
 export default class UserController {
+  
   // Method to get user data with jwt token
   static getUserDataWithToken = asyncHandler(async (req: Request, res: Response): Promise<void> => {
     res.status(HttpStatusCodes.OK).send(req.user);

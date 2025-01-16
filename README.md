@@ -43,6 +43,7 @@ This project implements a user authentication system, user management routes, an
    ```env
    JWT_SECRET=<your-jwt-secret>
    MONGO_URI = <mongodb-uri>
+   PORT = <PORT>
    ```
 
    Note - MongoDb URI should be only base URL.
@@ -261,6 +262,8 @@ Deletes multiple tasks for the authenticated user based on an array of task IDs.
 Make sure to add the following environment variable in the `.env` file:
 
 - `JWT_SECRET`: The secret key used to sign the JWT token. It should be kept secure and not exposed publicly.
+- `MONGO_URI`: Your MongoDB connection string (without the database name, just the base URL).
+- `PORT`: PORT at which the application run. For eg : 80, 3000, etc.
 
 ## Error Handling
 

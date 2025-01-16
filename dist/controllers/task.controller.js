@@ -47,6 +47,10 @@ TaskController.addNewTask = (0, asyncHandler_1.asyncHandler)((req, res) => __awa
         res.status(errorCodes_1.HttpStatusCodes.BAD_REQUEST).json({ message: 'Title, description and status fields are required' });
         return;
     }
+    if (!["pending", "inProgress", "completed"].includes(status)) {
+        res.status(errorCodes_1.HttpStatusCodes.BAD_REQUEST).json({ message: 'Invalid status' });
+        return;
+    }
     const newData = { title, description, status, createdBy: user._id };
     const newTask = yield task_model_1.default.create(newData);
     res.status(errorCodes_1.HttpStatusCodes.CREATED).json({ message: 'Task Created Successfully', data: newTask });
@@ -62,6 +66,10 @@ TaskController.updateTask = (0, asyncHandler_1.asyncHandler)((req, res) => __awa
     const task = yield task_model_1.default.findOne({ _id: id, createdBy: req.user._id });
     if (!task) {
         res.status(errorCodes_1.HttpStatusCodes.NOT_FOUND).json({ message: 'Task not found' });
+        return;
+    }
+    if (!["pending", "inProgress", "completed"].includes(status)) {
+        res.status(errorCodes_1.HttpStatusCodes.BAD_REQUEST).json({ message: 'Invalid status' });
         return;
     }
     task.title = title !== null && title !== void 0 ? title : task.title;

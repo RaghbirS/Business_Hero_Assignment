@@ -304,6 +304,7 @@ This application is deployed on Render. You can access the live application usin
    - Add the following environment variables:
      - `JWT_SECRET`: A secret key used for signing JWT tokens.
      - `MONGO_URI`: Your MongoDB connection string (without the database name, just the base URL).
+	 - `PORT`: PORT at which the application run. For eg : 80, 3000, etc.
 
 5. **Deploy**:
 

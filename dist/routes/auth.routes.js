@@ -8,7 +8,7 @@ const auth_controller_1 = __importDefault(require("../controllers/auth.controlle
 const router = (0, express_1.Router)();
 /**
  * @swagger
- * /api/auth/register:
+ * /api/auth/signup:
  *   post:
  *     summary: Register a new user
  *     description: Create a new user by providing necessary registration details such as name, email, and password.
@@ -21,14 +21,14 @@ const router = (0, express_1.Router)();
  *           schema:
  *             type: object
  *             properties:
- *               userName:
+ *               name:
  *                 type: string
  *               email:
  *                 type: string
  *               password:
  *                 type: string
  *             required:
- *               - userName
+ *               - name
  *               - email
  *               - password
  *     responses:
@@ -39,7 +39,7 @@ const router = (0, express_1.Router)();
  *       500:
  *         description: Server error.
  */
-router.post("/register", auth_controller_1.default.registerUser);
+router.post("/signup", auth_controller_1.default.registerUser);
 /**
  * @swagger
  * /api/auth/login:

@@ -1,37 +1,36 @@
 import { Request, Response, NextFunction } from "express";
-import { logger } from "./logger"; // Assuming you have a logger set up
+import { logger } from "./logger";
+import { UserInterface } from "../models/user.model";
 
+export type UserRequest = Request & { user?: UserInterface };
+  
 export const asyncHandler = (
-  fn: (req: Request, res: Response, next: NextFunction) => Promise<void>
+  fn: (req: UserRequest, res: Response, next: NextFunction) => Promise<void>
 ) => {
-  return (req: Request, res: Response, next: NextFunction) => {
-    fn(req, res, next).catch(async (error) => {
+  return async (req: UserRequest, res: Response, next: NextFunction) => {
+    try {
+      await fn(req, res, next);
+    } catch (error: any) {
       try {
-        // Dynamically import stack-trace
+
         const stackTrace = (await import("stack-trace")).default;
 
-        // Parse the error stack trace
         const trace = stackTrace.parse(error);
         const { fileName, lineNumber, columnNumber } = trace[0] || {};
 
-        // Log the error details, including file name, line number, column number
-        logger.error({
-          message: error.message,
-          stack: error.stack,
-          fileName,
-          lineNumber,
-          columnNumber,
-        });
-      } catch (err) {
-        // If parsing the stack trace fails, log the error directly
-        logger.error({
-          message: "Failed to capture stack trace",
-          error: err,
+        logger.error(
+          `${error.message} at ${fileName}:${lineNumber}:${columnNumber}`,
+          { stack: error.stack }
+        );
+      } catch (traceErr: any) {
+
+        logger.error("Failed to capture stack trace", {
+          originalError: error,
+          traceError: traceErr,
         });
       }
 
-      // Pass the error to the Express error handler
       next(error);
-    });
+    }
   };
 };

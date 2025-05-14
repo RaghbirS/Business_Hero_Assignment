@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const user_routes_1 = __importDefault(require("./user.routes"));
 const auth_routes_1 = __importDefault(require("./auth.routes"));
-const task_routes_1 = __importDefault(require("./task.routes"));
 const authMiddleware_1 = require("../middlewares/authMiddleware");
+const blog_routes_1 = __importDefault(require("./blog.routes"));
 /**
  * @swagger
  * components:
@@ -45,16 +45,15 @@ const authMiddleware_1 = require("../middlewares/authMiddleware");
  *       properties:
  *         token:
  *           type: string
- *
  * security:
  *   - BearerAuth: []  # This applies the BearerAuth globally to all routes
  */
 const router = (0, express_1.Router)();
 // Routes that don't require authentication
-router.use("/auth", auth_routes_1.default); // Register and login routes
+router.use("/auth", auth_routes_1.default); // Signup and login routes
 // Middleware that checks for a valid token (authentication)
 router.use(authMiddleware_1.authenticateToken);
 // Routes that require authentication
 router.use("/users", user_routes_1.default);
-router.use("/tasks", task_routes_1.default);
+router.use("/blogs", blog_routes_1.default);
 exports.default = router;

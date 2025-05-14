@@ -17,7 +17,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const mongoose_1 = __importDefault(require("mongoose"));
 dotenv_1.default.config();
 const PORT = process.env.PORT;
-const MONGO_URI = `${process.env.MONGO_URI}/task` || "";
+const MONGO_URI = `${process.env.MONGO_URI}/blog` || "";
 app_1.default.listen(PORT, () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield mongoose_1.default.connect(MONGO_URI);

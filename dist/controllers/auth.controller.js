@@ -26,8 +26,8 @@ class AuthController {
 _a = AuthController;
 // Method to register a new user
 AuthController.registerUser = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { email, userName, password } = req.body;
-    if (!email || !userName || !password) {
+    const { email, name, password } = req.body;
+    if (!email || !name || !password) {
         res.status(errorCodes_1.HttpStatusCodes.BAD_REQUEST).json({ message: 'Username, email and password fields are required' });
         return;
     }
@@ -39,7 +39,7 @@ AuthController.registerUser = (0, asyncHandler_1.asyncHandler)((req, res) => __a
     // Hash password
     const hashedPassword = yield bcrypt_1.default.hash(password, 10);
     // Create new user
-    const newUser = new user_model_1.default({ email, userName, password: hashedPassword });
+    const newUser = new user_model_1.default({ email, name, password: hashedPassword });
     yield newUser.save();
     res.status(errorCodes_1.HttpStatusCodes.CREATED).json({ message: 'User registered successfully' });
 }));
@@ -67,6 +67,7 @@ AuthController.loginUser = (0, asyncHandler_1.asyncHandler)((req, res) => __awai
         expiresIn: '1h',
     });
     delete user.password;
+    res.cookie('token', token, { httpOnly: true, secure: true });
     res.status(errorCodes_1.HttpStatusCodes.OK).json({ message: 'Login successful', token, user });
 }));
 exports.default = AuthController;

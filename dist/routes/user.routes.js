@@ -14,6 +14,8 @@ const router = (0, express_1.Router)();
  *     description: Retrieve user data by passing an authorization token in the request header.
  *     tags:
  *       - Users
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: User data retrieved successfully.
@@ -35,6 +37,8 @@ router.get("/getUser", user_controller_1.default.getUserDataWithToken);
  *     description: Delete a specific user by providing their ID.
  *     tags:
  *       - Users
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
@@ -51,4 +55,23 @@ router.get("/getUser", user_controller_1.default.getUserDataWithToken);
  *         description: Server error.
  */
 router.delete("/:id", user_controller_1.default.deleteUser);
+/**
+ * @swagger
+ * /api/users/getUsersList:
+ *   get:
+ *     summary: Get a list of users
+ *     description: Retrieve a list of all users.
+ *     tags:
+ *       - Users
+ *     responses:
+ *       200:
+ *         description: List of users retrieved successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+router.get("/getUsersList", user_controller_1.default.getUsersList);
 exports.default = router;

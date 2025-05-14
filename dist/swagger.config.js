@@ -8,16 +8,18 @@ const options = {
     definition: {
         openapi: "3.0.0",
         info: {
-            title: "API Documentation",
+            title: "Blog API Documentation",
             version: "1.0.0",
-            description: "API documentation for your application",
+            description: "API documentation for the Blog application",
         },
         servers: [
             {
-                url: "http://localhost", // Replace with your API server URL
+                url: "http://localhost",
+                description: "Development server",
             },
             {
-                url: "https://business-hero-assignment.onrender.com", // Replace with your API server URL
+                url: "",
+                description: "Production server",
             },
         ],
         components: {
@@ -25,29 +27,9 @@ const options = {
                 User: {
                     type: "object",
                     properties: {
-                        userName: {
-                            type: "string",
-                        },
-                        email: {
-                            type: "string",
-                        },
-                        password: {
-                            type: "string",
-                        },
-                    },
-                },
-                RegisterRequest: {
-                    type: "object",
-                    properties: {
-                        userName: {
-                            type: "string",
-                        },
-                        email: {
-                            type: "string",
-                        },
-                        password: {
-                            type: "string",
-                        },
+                        _id: { type: "string" },
+                        name: { type: "string" },
+                        email: { type: "string" },
                     },
                 },
             },
@@ -59,13 +41,13 @@ const options = {
                 },
             },
         },
-        security: [
-            {
-                BearerAuth: [],
-            },
-        ],
     },
-    apis: ["./src/routes/*.ts", "./dist/routes/*.js"], // Adjust the path to your route files
+    security: [
+        {
+            BearerAuth: [],
+        },
+    ],
+    apis: ["./src/routes/*.ts", "./dist/routes/*.js"],
 };
 const swaggerSpec = (0, swagger_jsdoc_1.default)(options);
 exports.default = swaggerSpec;

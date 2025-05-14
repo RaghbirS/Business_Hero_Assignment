@@ -43,35 +43,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.asyncHandler = void 0;
-const logger_1 = require("./logger"); // Assuming you have a logger set up
+const logger_1 = require("./logger");
 const asyncHandler = (fn) => {
-    return (req, res, next) => {
-        fn(req, res, next).catch((error) => __awaiter(void 0, void 0, void 0, function* () {
+    return (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            yield fn(req, res, next);
+        }
+        catch (error) {
             try {
-                // Dynamically import stack-trace
                 const stackTrace = (yield Promise.resolve().then(() => __importStar(require("stack-trace")))).default;
-                // Parse the error stack trace
                 const trace = stackTrace.parse(error);
                 const { fileName, lineNumber, columnNumber } = trace[0] || {};
-                // Log the error details, including file name, line number, column number
-                logger_1.logger.error({
-                    message: error.message,
-                    stack: error.stack,
-                    fileName,
-                    lineNumber,
-                    columnNumber,
+                logger_1.logger.error(`${error.message} at ${fileName}:${lineNumber}:${columnNumber}`, { stack: error.stack });
+            }
+            catch (traceErr) {
+                logger_1.logger.error("Failed to capture stack trace", {
+                    originalError: error,
+                    traceError: traceErr,
                 });
             }
-            catch (err) {
-                // If parsing the stack trace fails, log the error directly
-                logger_1.logger.error({
-                    message: "Failed to capture stack trace",
-                    error: err,
-                });
-            }
-            // Pass the error to the Express error handler
             next(error);
-        }));
-    };
+        }
+    });
 };
 exports.asyncHandler = asyncHandler;

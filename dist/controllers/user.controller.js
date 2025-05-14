@@ -16,10 +16,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const asyncHandler_1 = require("../utils/asyncHandler");
 const errorCodes_1 = require("../utils/errorCodes");
 const user_model_1 = __importDefault(require("../models/user.model"));
-const task_model_1 = __importDefault(require("../models/task.model"));
+const blog_model_1 = __importDefault(require("../models/blog.model"));
 class UserController {
 }
 _a = UserController;
+UserController.getUsersList = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const users = yield user_model_1.default.find({}, { name: 1, _id: 1 }).lean();
+    res.status(errorCodes_1.HttpStatusCodes.OK).send(users);
+}));
 // Method to get user data with jwt token
 UserController.getUserDataWithToken = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.status(errorCodes_1.HttpStatusCodes.OK).send(req.user);
@@ -28,8 +32,8 @@ UserController.getUserDataWithToken = (0, asyncHandler_1.asyncHandler)((req, res
 UserController.deleteUser = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield user_model_1.default.findByIdAndDelete(req.params.id);
-        yield task_model_1.default.deleteMany({ createdBy: req.user._id });
-        res.status(errorCodes_1.HttpStatusCodes.OK).send({ message: "User and its all Tasks Deleted Successfully" });
+        yield blog_model_1.default.deleteMany({ user: req.user._id });
+        res.status(errorCodes_1.HttpStatusCodes.OK).send({ message: "User and its all Blogs Deleted Successfully" });
     }
     catch (err) {
         res.status(errorCodes_1.HttpStatusCodes.INTERNAL_SERVER_ERROR).send(err);

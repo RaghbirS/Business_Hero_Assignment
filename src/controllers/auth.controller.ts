@@ -12,10 +12,10 @@ const JWT_SECRET = process.env.JWT_SECRET
 export default class AuthController {
 
     // Method to register a new user
-    static registerUser = asyncHandler(async (req: Request, res: Response): Promise<void> => {
-        const { email, userName, password } = req.body;
+    static registerUser = asyncHandler(async (req, res): Promise<void> => {
+        const { email, name, password } = req.body;
 
-        if(!email || !userName || !password) {
+        if(!email || !name || !password) {
             res.status(HttpStatusCodes.BAD_REQUEST).json({ message: 'Username, email and password fields are required' });
             return
         }
@@ -31,14 +31,14 @@ export default class AuthController {
         const hashedPassword = await bcrypt.hash(password, 10, );
 
         // Create new user
-        const newUser = new User({ email, userName, password: hashedPassword });
+        const newUser = new User({ email, name, password: hashedPassword });
         await newUser.save();
 
         res.status(HttpStatusCodes.CREATED).json({ message: 'User registered successfully' });
     })
 
     // Method to register a new user
-    static loginUser = asyncHandler(async (req: Request, res: Response): Promise<void> => {
+    static loginUser = asyncHandler(async (req, res): Promise<void> => {
         const { email, password } = req.body;
 
         if(!email || !password ) {
@@ -65,6 +65,7 @@ export default class AuthController {
             expiresIn: '1h',
         });
         delete user.password;
+        res.cookie('token', token, { httpOnly: true, secure: true });
         res.status(HttpStatusCodes.OK).json({ message: 'Login successful', token, user });
     })
 

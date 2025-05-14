@@ -1,8 +1,8 @@
 import { Router } from "express";
 import userRoutes from "./user.routes";
 import authRoutes from "./auth.routes";
-import taskRoutes from "./task.routes";
 import { authenticateToken } from "../middlewares/authMiddleware";
+import blogRoutes from "./blog.routes";
 
 /**
  * @swagger
@@ -41,7 +41,6 @@ import { authenticateToken } from "../middlewares/authMiddleware";
  *       properties:
  *         token:
  *           type: string
- * 
  * security:
  *   - BearerAuth: []  # This applies the BearerAuth globally to all routes
  */
@@ -49,13 +48,13 @@ import { authenticateToken } from "../middlewares/authMiddleware";
 const router = Router();
 
 // Routes that don't require authentication
-router.use("/auth", authRoutes);  // Register and login routes
+router.use("/auth", authRoutes);  // Signup and login routes
 
 // Middleware that checks for a valid token (authentication)
 router.use(authenticateToken);
 
 // Routes that require authentication
 router.use("/users", userRoutes);
-router.use("/tasks", taskRoutes);
+router.use("/blogs", blogRoutes);
 
 export default router;

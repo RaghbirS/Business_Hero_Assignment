@@ -5,7 +5,7 @@ const router = Router();
 
 /**
  * @swagger
- * /api/auth/register:
+ * /api/auth/signup:
  *   post:
  *     summary: Register a new user
  *     description: Create a new user by providing necessary registration details such as name, email, and password.
@@ -18,14 +18,14 @@ const router = Router();
  *           schema:
  *             type: object
  *             properties:
- *               userName:
+ *               name:
  *                 type: string
  *               email:
  *                 type: string
  *               password:
  *                 type: string
  *             required:
- *               - userName
+ *               - name
  *               - email
  *               - password
  *     responses:
@@ -36,7 +36,7 @@ const router = Router();
  *       500:
  *         description: Server error.
  */
-router.post("/register", AuthController.registerUser);
+router.post("/signup", AuthController.registerUser);
 
 /**
  * @swagger

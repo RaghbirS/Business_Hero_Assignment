@@ -1,17 +1,18 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, ObjectId } from "mongoose";
 
 export interface UserInterface {
-  userName: string;
+  _id: ObjectId;
+  name: string;
   email: string;
   password: string;
-  // posts: mongoose.Types.ObjectId[];
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const userSchema: Schema = new Schema({
-  userName: { type: String, required: true },
+  name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  // tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'task' }],
 }, { timestamps: true });
 
 const User = mongoose.model<UserInterface & Document>("user", userSchema);
